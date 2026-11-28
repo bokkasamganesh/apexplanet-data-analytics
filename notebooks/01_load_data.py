@@ -23,9 +23,30 @@ print(df.columns.tolist())
 print("\nDATASET INFORMATION:")
 df.info()
 
-# STEP 6: Check missing values
-print("\nMISSING VALUES BY COLUMN:")
-print(df.isnull().sum())
+# # STEP 6: Check missing values
+# print("\nMISSING VALUES BY COLUMN:")
+# print(df.isnull().sum())
 
-print("\nTOTAL MISSING VALUES:")
-print(df.isnull().sum().sum())
+# print("\nTOTAL MISSING VALUES:")
+# print(df.isnull().sum().sum())
+
+
+# STEP 7: Check duplicate records
+
+print("\nDUPLICATE RECORDS:")
+print(df.duplicated().sum())
+
+# STEP 8: Remove duplicate records
+
+before_count = len(df)
+
+df = df.drop_duplicates()
+
+after_count = len(df)
+
+removed_count = before_count - after_count
+
+print("\nDUPLICATE REMOVAL SUMMARY:")
+print("Before removing duplicates:", before_count)
+print("After removing duplicates:", after_count)
+print("Total duplicates removed:", removed_count)
