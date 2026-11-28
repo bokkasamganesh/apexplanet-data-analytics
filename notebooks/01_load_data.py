@@ -23,12 +23,12 @@ print(df.columns.tolist())
 print("\nDATASET INFORMATION:")
 df.info()
 
-# # STEP 6: Check missing values
-# print("\nMISSING VALUES BY COLUMN:")
-# print(df.isnull().sum())
+# STEP 6: Check missing values
+print("\nMISSING VALUES BY COLUMN:")
+print(df.isnull().sum())
 
-# print("\nTOTAL MISSING VALUES:")
-# print(df.isnull().sum().sum())
+print("\nTOTAL MISSING VALUES:")
+print(df.isnull().sum().sum())
 
 
 # STEP 7: Check duplicate records
@@ -50,3 +50,34 @@ print("\nDUPLICATE REMOVAL SUMMARY:")
 print("Before removing duplicates:", before_count)
 print("After removing duplicates:", after_count)
 print("Total duplicates removed:", removed_count)
+
+
+
+# STEP 9: Fix date data types
+
+df["Order Date"] = pd.to_datetime(df["Order Date"])
+df["Ship Date"] = pd.to_datetime(df["Ship Date"])
+
+print("\nUPDATED DATA TYPES:")
+print(df.dtypes)
+
+
+# STEP 10: Convert categorical columns
+
+categorical_columns = [
+    "Ship Mode",
+    "Segment",
+    "Country",
+    "Region",
+    "Category",
+    "Sub-Category"
+]
+
+for column in categorical_columns:
+    df[column] = df[column].astype("category")
+
+print("\nFINAL DATA TYPES:")
+print(df.dtypes)
+
+print("\nUPDATED MEMORY USAGE:")
+print(df.memory_usage(deep=True).sum())
