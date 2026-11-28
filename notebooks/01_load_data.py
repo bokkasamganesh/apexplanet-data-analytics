@@ -81,3 +81,95 @@ print(df.dtypes)
 
 print("\nUPDATED MEMORY USAGE:")
 print(df.memory_usage(deep=True).sum())
+
+
+
+# STEP 11: Detect outliers using IQR method
+
+columns = ["Sales", "Profit", "Discount"]
+
+for column in columns:
+
+    Q1 = df[column].quantile(0.25)
+    Q3 = df[column].quantile(0.75)
+
+    IQR = Q3 - Q1
+
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    outliers = df[
+        (df[column] < lower_bound) |
+        (df[column] > upper_bound)
+    ]
+
+    print(f"\nOutlier analysis for {column}:")
+    print("Q1:", Q1)
+    print("Q3:", Q3)
+    print("IQR:", IQR)
+    print("Lower Bound:", lower_bound)
+    print("Upper Bound:", upper_bound)
+    print("Number of Outliers:", len(outliers))
+
+
+
+    # STEP 12: Inspect potential outliers
+
+for column in columns:
+
+    Q1 = df[column].quantile(0.25)
+    Q3 = df[column].quantile(0.75)
+
+    IQR = Q3 - Q1
+
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    outliers = df[
+        (df[column] < lower_bound) |
+        (df[column] > upper_bound)
+    ]
+
+    print(f"\nOUTLIER DETAILS: {column}")
+    print("Minimum value:", df[column].min())
+    print("Maximum value:", df[column].max())
+    print("First 5 outlier values:")
+    print(outliers[column].head())
+
+
+
+    # STEP 13: Handle potential outliers
+
+# IQR method was used to identify potential outliers
+# Sales, Profit, and Discount were inspected.
+# These values may represent genuine business transactions.
+# Therefore, no rows were removed or capped.
+
+print("\nOutlier handling completed.")
+print("No valid business transactions were removed.")
+print("Final dataset shape:", df.shape)
+
+
+
+# STEP 14: Save cleaned dataset
+
+output_file = BASE_DIR / "data" / "cleaned_superstore.csv"
+
+df.to_csv(output_file, index=False)
+
+print("\nCleaned dataset saved successfully!")
+print("File location:", output_file)
+
+
+
+
+# STEP 15: Statistical Summary
+
+print("\n========== DATASET INFORMATION ==========")
+df.info()
+
+print("\n========== STATISTICAL SUMMARY ==========")
+print(df.describe())
+
+print("\n========== CATEGORICAL SUMMARY ==========")
+print(df.describe(include="category"))
